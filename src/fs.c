@@ -69,11 +69,11 @@ static void luv_push_stats_table(lua_State* L, const uv_stat_t* s) {
   if (S_ISREG(s->st_mode)) {
     type = "file";
   }
-  else if (S_ISDIR(s->st_mode)) {
-    type = "directory";
-  }
   else if (S_ISLNK(s->st_mode)) {
     type = "link";
+  }
+  else if (S_ISDIR(s->st_mode)) {
+    type = "directory";
   }
   else if (S_ISFIFO(s->st_mode)) {
     type = "fifo";
