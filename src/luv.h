@@ -33,7 +33,7 @@
 # define S_ISFIFO(x) (((x) & _S_IFMT) == _S_IFIFO)
 # define S_ISCHR(x)  (((x) & _S_IFMT) == _S_IFCHR)
 # define S_ISBLK(x)  0
-# define S_ISLNK(x)  0
+# define S_ISLNK(x)  (((x) & S_IFLNK) == S_IFLNK)
 # define S_ISSOCK(x) 0
 #else
 # include <unistd.h>
