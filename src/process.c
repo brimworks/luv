@@ -115,7 +115,7 @@ static int luv_spawn(lua_State* L) {
   // get the stdio list
   lua_getfield(L, 2, "stdio");
   if (lua_type(L, -1) == LUA_TTABLE) {
-    options.stdio_count = sparse_rawlen(L, -1);
+    options.stdio_count = len = sparse_rawlen(L, -1);
     options.stdio = malloc(len * sizeof(*options.stdio));
     if (!options.stdio) {
       luv_clean_options(&options);
