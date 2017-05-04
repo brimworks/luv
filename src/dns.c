@@ -63,6 +63,12 @@ static void luv_pushaddrinfo(lua_State* L, struct addrinfo* res) {
 static void luv_getaddrinfo_cb(uv_getaddrinfo_t* req, int status, struct addrinfo* res) {
   lua_State* L = luv_state(req->loop);
   int nargs;
+  if (UV_ECANCELED == status) {
+    luv_cleanup_req(L, req->data);
+    req->data = NULL;
+    if (res) uv_freeaddrinfo(res);
+    return;
+  }
 
   if (status < 0) {
     luv_status(L, status);
@@ -203,6 +209,11 @@ static int luv_getaddrinfo(lua_State* L) {
 
 static void luv_getnameinfo_cb(uv_getnameinfo_t* req, int status, const char* hostname, const char* service) {
   lua_State* L = luv_state(req->loop);
+  if (UV_ECANCELED == status) {
+    luv_cleanup_req(L, req->data);
+    req->data = NULL;
+    return;
+  }
 
   int nargs;
 
